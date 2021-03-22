@@ -66,13 +66,26 @@ const addRecords = transactions => {
     )
 }
 function downLoadDb() {
-    console.log(navigator.onLine)
     const indexTransaction = db.transaction(["transactions"], "readwrite")
     const store = indexTransaction.objectStore("transactions")
     const storedDB = store.getAll()
     storedDB.onsuccess = e => {
         if (storedDB.result.length > 0) {
-            
+            console.log(navigator.onLine)
+            fetch("/api/transaction/bulk", {
+                method: "POST",
+                body: JSON.stringify(storedDB.result),
+                headers: {
+                  Accept: "application/json, text/plain, */*",
+                  "Content-Type": "application/json"
+                }
+              })
+              .then(response => response.json())
+              .then(() => {
+                const transaction = db.transaction(["transactions"], "readwrite");
+                const store = transaction.objectStore("transactions");
+                store.clear();
+              });
         }
     }
 }
