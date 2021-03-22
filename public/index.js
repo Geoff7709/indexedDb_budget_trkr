@@ -83,6 +83,7 @@ fetch("/api/transaction")
   .then(data => {
     // save db data on global variable
     transactions = data;
+    console.log("data:", transactions)
     // transactions.forEach(transaction => {
     //   console.log(transaction)
     //   mongoTransactions.push(transaction)
@@ -103,7 +104,7 @@ function populateTotal() {
   let total = transactions.reduce((total, t) => {
     return total + parseInt(t.value);
   }, 0);
-
+  console.log("total:", total)
   let totalEl = document.querySelector("#total");
   totalEl.textContent = total;
 }
@@ -114,6 +115,7 @@ function populateTable() {
 
   transactions.forEach(transaction => {
     // create and populate a table row
+    console.log("tableTrans:", transaction)
     let tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${transaction.name}</td>
