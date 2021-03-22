@@ -87,7 +87,9 @@ function downLoadDb() {
                 store.clear();
               })
               .catch(err => {
-                  if (err) throw err
+                  if (err) {
+                    console.log(err)
+                  }
                 });
         }
     }
