@@ -85,7 +85,10 @@ function downLoadDb() {
                 const transaction = db.transaction(["transactions"], "readwrite");
                 const store = transaction.objectStore("transactions");
                 store.clear();
-              });
+              })
+              .catch(err => {
+                  if (err) throw err
+                });
         }
     }
 }
