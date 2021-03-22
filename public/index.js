@@ -1,80 +1,6 @@
 let transactions = [];
 let myChart;
-// let db
-// let mongoTransactions = []
-// console.log("mongo", mongoTransactions)
-// const request = window.indexedDB.open("transactionList", 1)
 
-// request.onerror = e => console.log(e.target.errorCode)
-
-// request.onupgradeneeded = e => {
-//   const db = e.target.result
-//   db.createObjectStore("transactions",
-//     {
-//       keyPath: "id",
-//     })
-// }
-
-
-
-// request.onsuccess = e => {
-//   db = e.target.result
-//   console.log(`Successfully opened ${db.name}`)
-//   // getRecords()
-//   addRecords(mongoTransactions)
-// }
-
-// const saveRecord = (transaction) => {
-//   console.log("save:", transaction)
-//   const indexTransaction = db.transaction(["transactions"], "readwrite")
-//   const store = indexTransaction.objectStore("transactions")
-//   console.log("record:", transaction.name, transaction.value, transaction.date)
-//   console.log(store)
-//   const addStore = store.put(
-//     {
-//       id: transaction.date,
-//       name: transaction.name,
-//       value: transaction.value,
-//       date: transaction.date
-//     }
-//   )
-//   addStore.onsuccess = e => {
-//     console.log(addStore.result)
-//   }
-
-// }
-// const getRecords = () => {
-
-//   const indexTransaction = db.transaction(["transactions"], "readonly")
-//   const store = indexTransaction.objectStore("transactions")
-//   const getAllRequest =
-//     store.getAll()
-//   getAllRequest.onsuccess = (e) => {
-//     transactions = getAllRequest.result
-//     populateTotal()
-//     populateTable()
-//     populateChart()
-//   }
-
-// }
-// const addRecords = transactions => {
-//   const indexTransaction = db.transaction(["transactions"], "readwrite")
-//   const store = indexTransaction.objectStore("transactions")
-//   transactions.forEach(transaction => {
-//     console.log("record:", transaction)
-//     console.log(db)
-//     store.put(
-//       {
-//         id: transaction._id,
-//         name: transaction.name,
-//         value: transaction.value,
-//         date: transaction.date
-//       }
-//     )
-//     console.log("stored:", transaction)
-//   }
-//   )
-// }
 
 fetch("/api/transaction")
   .then(response => {
@@ -101,10 +27,10 @@ fetch("/api/transaction")
 
 function populateTotal() {
   // reduce transaction amounts to a single total value
+  console.log("totalTrans:", transactions)
   let total = transactions.reduce((total, t) => {
     return total + parseInt(t.value);
   }, 0);
-  console.log("total:", total)
   let totalEl = document.querySelector("#total");
   totalEl.textContent = total;
 }
@@ -112,10 +38,10 @@ function populateTotal() {
 function populateTable() {
   let tbody = document.querySelector("#tbody");
   tbody.innerHTML = "";
-
+  console.log("tableTrans1:", transactions)
   transactions.forEach(transaction => {
     // create and populate a table row
-    console.log("tableTrans:", transaction)
+    console.log("tableTrans2:", transaction)
     let tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${transaction.name}</td>
@@ -128,9 +54,10 @@ function populateTable() {
 
 function populateChart() {
   // copy array and reverse it
+  console.log("chartTrans:", transactions)
   let reversed = transactions.slice().reverse();
   let sum = 0;
-
+  console.log("reversTrans:", reversed)
   // create date labels for chart
   let labels = reversed.map(t => {
     let date = new Date(t.date);
@@ -189,7 +116,7 @@ function sendTransaction(isAdding) {
   if (!isAdding) {
     transaction.value *= -1;
   }
-
+  console.log("sendTrans:", transactions)
   // add to beginning of current array of data
   transactions.unshift(transaction);
 
