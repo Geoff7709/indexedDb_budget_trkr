@@ -11,7 +11,7 @@
 
   [Questions](#questions)
 
-  [Lisence](#lisence)
+  [License](#license)
 
 
 ## Description
@@ -41,7 +41,7 @@ This application utilizes:
   For further questions please feel free to email the developers:
 
   geoffzimmerman23@gmail.com
-  ## Lisence
+  ## License
   Use of this software is regulated under the following lisence:
 
   [MIT](https://opensource.org/licenses/MIT)
